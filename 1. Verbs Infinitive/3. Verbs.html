@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hola Mundo Formularios</title>
+</head>
+<body bgcolor=”#2980B9″ >
+<center>
+
+
+<h2 id="inicio"></h2>
+
+
+<h2 id="iniciouno"></h2>
+
+<input id="myInput" value="">
+<button id="myBtn" onclick="palabra()">Button</button>
+
+
+<h2 id="respuesta"></h2> 
+
+
+<input type="button" value="Palabras mal escritas" onclick="genera_tabla()">
+
+<script > 
+
+var vector = [ 
+
+["charger","cargar"],
+["chercher","buscar"],
+["choisir","elegir"],
+["commencer","empezar"],
+["comprendre","entender"],
+["compter","contar (números)"],
+["conduire","conducir"],
+["connaître","conocer"],
+["continuer","continuar"],
+["coucher","acostarse, ir a dormir"],
+["couper","cortar"],
+["courir","correr"],
+["couvrir","cubrir"],
+["craindre","tener miedo"],
+["crier","gritar"],
+["croire","creer"],
+["danser","bailar"],
+["décider","decidir"],
+["découvrir","descubrir"],
+["dégager","despejar"]
+
+
+
+]
+
+//////////////////// Función para generar una secuencia de numeros
+function makearray(num1, num2){
+  var vector = []
+  for (var i = num1; i <= num2; i++) {
+    vector = vector.concat(i);
+  }
+  return vector;
+};
+////////////////// Función para desordenar números
+function desordenar(array){
+  array = array.sort(function() {return Math.random() - 0.5});
+  return array;
+};
+
+/////////////// Pruebas
+var secuencia = makearray(0,vector.length-1);
+var sd = desordenar(secuencia);
+console.log(sd);
+//////////////
+
+var i=0;
+var errores = 0;
+var mal =[];
+
+document.getElementById("inicio").innerHTML = vector[sd[i]][1];
+
+function palabra() {
+
+  var x = document.getElementById("myInput").value;
+
+  if (x == vector[sd[i]][0]) {     //// correcto
+  x = "Correcto";
+  i= i +1;
+  } else {                    //// Incorrecto
+               x = "Incorrecto, es " + vector[sd[i]][0];
+               errores ++;
+               mal = mal.concat(vector[sd[i]]);
+               console.log(mal);
+               console.log(mal[sd[i]])
+               console.log(mal.length)
+
+  }
+  document.getElementById("respuesta").innerHTML = x;
+
+  i= i;
+
+  ////// Dice que has terminado
+
+  if (i<vector.length) { document.getElementById("iniciouno").innerHTML = vector[sd[i]][1]; }
+  else document.getElementById("respuesta").innerHTML = "Terminaste, tuviste " + errores + " errores";
+};
+
+
+///////////////////////////////
+
+var input = document.getElementById("myInput");
+
+input.addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+   event.preventDefault();
+   document.getElementById("myBtn").click();
+  }
+});
+////////////////////////////// Crear tabla
+function genera_tabla() {
+                
+                var aux = 0;
+  // Obtener la referencia del elemento body
+  var body = document.getElementsByTagName("body")[0];
+  // Crea un elemento <table> y un elemento <tbody>
+  var tabla   = document.createElement("table");
+  var tblBody = document.createElement("tbody");
+  // Crea las celdas
+  for (var i = 0; i < (mal.length/2)  ; i++) {
+    // Crea las hileras de la tabla
+    var hilera = document.createElement("tr");
+
+    for (var j = 0; j < 2; j++) {
+      // Crea un elemento <td> y un nodo de texto, haz que el nodo de
+      // texto sea el contenido de <td>, ubica el elemento <td> al final
+      // de la hilera de la tabla
+
+      var celda = document.createElement("td");
+      var textoCelda = document.createTextNode(mal[aux]);
+      celda.appendChild(textoCelda);
+      hilera.appendChild(celda);
+      aux++;
+    }
+    // agrega la hilera al final de la tabla (al final del elemento tblbody)
+    tblBody.appendChild(hilera);
+
+  }
+  // posiciona el <tbody> debajo del elemento <table>
+  tabla.appendChild(tblBody);
+  // appends <table> into <body>
+  body.appendChild(tabla);
+  // modifica el atributo "border" de la tabla y lo fija a "2";
+  tabla.setAttribute("border", "10");
+}
+
+</script>
+ 
+</center>
+</body>
+</html>
