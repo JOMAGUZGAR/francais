@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cuestionario</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+    h2 {
+        margin-bottom: 10px;
+    }
+    input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        box-sizing: border-box;
+    }
+    button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+    #respuestasIncorrectas {
+        display: none;
+    }
+</style>
+</head>
+<body>
+
+<h2>Pregunta 1: hola</h2>
+<input type="text" id="respuesta1">
+
+<h2>Pregunta 2: adiós</h2>
+<input type="text" id="respuesta2">
+
+<h2>Pregunta 3: perro</h2>
+<input type="text" id="respuesta3">
+
+<h2>Pregunta 4: gato</h2>
+<input type="text" id="respuesta4">
+
+<h2>Pregunta 5: casa</h2>
+<input type="text" id="respuesta5">
+
+<button onclick="verificarRespuestas()">Verificar Respuestas</button>
+
+<div id="respuestasIncorrectas"></div>
+
+<script>
+function verificarRespuestas() {
+    var respuestas = [
+        document.getElementById("respuesta1").value.trim().toLowerCase(),
+        document.getElementById("respuesta2").value.trim().toLowerCase(),
+        document.getElementById("respuesta3").value.trim().toLowerCase(),
+        document.getElementById("respuesta4").value.trim().toLowerCase(),
+        document.getElementById("respuesta5").value.trim().toLowerCase()
+    ];
+
+    var respuestasCorrectas = ["bonjour", "au revoir", "chien", "chat", "maison"];
+    var respuestasIncorrectas = [];
+
+    for (var i = 0; i < respuestas.length; i++) {
+        if (respuestas[i] !== respuestasCorrectas[i]) {
+            respuestasIncorrectas.push(respuestasCorrectas[i]);
+        }
+    }
+
+    mostrarRespuestasIncorrectas(respuestasIncorrectas);
+}
+
+function mostrarRespuestasIncorrectas(respuestasIncorrectas) {
+    var divRespuestas = document.getElementById("respuestasIncorrectas");
+    divRespuestas.innerHTML = "<h2>Palabras incorrectas:</h2>";
+    if (respuestasIncorrectas.length === 0) {
+        divRespuestas.innerHTML += "<p>Todas las respuestas son correctas.</p>";
+    } else {
+        for (var i = 0; i < respuestasIncorrectas.length; i++) {
+            divRespuestas.innerHTML += "<p>" + respuestasIncorrectas[i] + "</p>";
+        }
+    }
+    divRespuestas.style.display = "block";
+}
+</script>
+
+</body>
+</html>
