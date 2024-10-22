@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hola Mundo Formularios</title>
+</head>
+<body bgcolor=”#2980B9″ >
+<center>
+
+
+<h2 id="inicio"></h2>
+
+
+<h2 id="iniciouno"></h2>
+
+<input id="myInput" value="">
+<button id="myBtn" onclick="palabra()">Button</button>
+
+
+<h2 id="respuesta"></h2> 
+
+
+<input type="button" value="Palabras mal escritas" onclick="genera_tabla()">
+
+<script > 
+
+var vector = [ 
+
+["it's so different", "c'est tellement différent"],
+["we're sorry", "nous sommes désolés"],
+["I was disgusted", "j'étais dégoûté"],
+["the cake is delicious", "le gâteau est délicieux"],
+["Jim is cruel", "Jim est cruel"],
+["the beds are uncomfortable", "les lits sont inconfortables"],
+["this room is comfortable", "cette pièce est confortable"],
+["the sky is clear", "le ciel est clair"],
+["it's too expensive", "c'est trop cher"],
+["it's going to be hot", "il va faire chaud"],
+["Rebecca is charming", "Rebecca est charmante"],
+["you were unlucky", "tu étais malchanceux"],
+["I am lucky", "je suis chanceux"],
+["he became famous", "il est devenu célèbre"],
+["the sea is blue", "la mer est bleue"],
+["he is not a bad guy", "il n'est pas un mauvais gars"],
+["we felt good", "nous nous sommes sentis bien"],
+["I know she's beautiful", "je sais qu'elle est belle"],
+["he is handsome and intelligent", "il est beau et intelligent"],
+["you are arrogant", "tu es arrogant"],
+["what a funny man", "quel homme amusant"],
+["be friendly!", "soyez amicales !"],
+["elderly", "âgé"],
+["old", "vieux"],
+["I think Ben is elderly", "je pense que Ben est âgé"],
+["he is very young", "il est très jeune"],
+["I would like that", "j'aimerais bien"],
+["she is adorable", "elle est adorable"],
+["what he was saying was so boring", "ce qu'il disait était tellement ennuyeux"],
+["the math teacher is really dull", "le prof de maths est vraiment plat"]
+
+
+
+]
+
+//////////////////// Función para generar una secuencia de numeros
+function makearray(num1, num2){
+  var vector = []
+  for (var i = num1; i <= num2; i++) {
+    vector = vector.concat(i);
+  }
+  return vector;
+};
+////////////////// Función para desordenar números
+function desordenar(array){
+  array = array.sort(function() {return Math.random() - 0.5});
+  return array;
+};
+
+/////////////// Pruebas
+var secuencia = makearray(0,vector.length-1);
+var sd = desordenar(secuencia);
+console.log(sd);
+//////////////
+
+var i=0;
+var errores = 0;
+var mal =[];
+
+document.getElementById("inicio").innerHTML = vector[sd[i]][1];
+
+function palabra() {
+
+  var x = document.getElementById("myInput").value;
+
+  if (x == vector[sd[i]][0]) {     //// correcto
+  x = "Correcto";
+  i= i +1;
+  } else {                    //// Incorrecto
+               x = "Incorrecto, es " + vector[sd[i]][0];
+               errores ++;
+               mal = mal.concat(vector[sd[i]]);
+               console.log(mal);
+               console.log(mal[sd[i]])
+               console.log(mal.length)
+
+  }
+  document.getElementById("respuesta").innerHTML = x;
+
+  i= i;
+
+  ////// Dice que has terminado
+
+  if (i<vector.length) { document.getElementById("iniciouno").innerHTML = vector[sd[i]][1]; }
+  else document.getElementById("respuesta").innerHTML = "Terminaste, tuviste " + errores + " errores";
+};
+
+
+///////////////////////////////
+
+var input = document.getElementById("myInput");
+
+input.addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+   event.preventDefault();
+   document.getElementById("myBtn").click();
+  }
+});
+////////////////////////////// Crear tabla
+function genera_tabla() {
+                
+                var aux = 0;
+  // Obtener la referencia del elemento body
+  var body = document.getElementsByTagName("body")[0];
+  // Crea un elemento <table> y un elemento <tbody>
+  var tabla   = document.createElement("table");
+  var tblBody = document.createElement("tbody");
+  // Crea las celdas
+  for (var i = 0; i < (mal.length/2)  ; i++) {
+    // Crea las hileras de la tabla
+    var hilera = document.createElement("tr");
+
+    for (var j = 0; j < 2; j++) {
+      // Crea un elemento <td> y un nodo de texto, haz que el nodo de
+      // texto sea el contenido de <td>, ubica el elemento <td> al final
+      // de la hilera de la tabla
+
+      var celda = document.createElement("td");
+      var textoCelda = document.createTextNode(mal[aux]);
+      celda.appendChild(textoCelda);
+      hilera.appendChild(celda);
+      aux++;
+    }
+    // agrega la hilera al final de la tabla (al final del elemento tblbody)
+    tblBody.appendChild(hilera);
+
+  }
+  // posiciona el <tbody> debajo del elemento <table>
+  tabla.appendChild(tblBody);
+  // appends <table> into <body>
+  body.appendChild(tabla);
+  // modifica el atributo "border" de la tabla y lo fija a "2";
+  tabla.setAttribute("border", "10");
+}
+
+</script>
+ 
+</center>
+</body>
+</html>
